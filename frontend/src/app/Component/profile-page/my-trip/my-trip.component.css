@@ -1,44 +1,174 @@
+.trips-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.no-trips {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.book-btn {
+  background-color: #d84e55;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
 .SingleTrip {
-    border: 1px solid green;
-    margin-top : 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    width: 90%;
-    height : 100%;
-    margin: 20px auto;
-    justify-content: space-evenly;
-    align-items: center;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px 0 hsla(0,0%,75%,.5);
-    border: 1px solid #f0f1f2;
-    background-color: #fff;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+}
+
+@media (min-width: 768px) {
+  .SingleTrip {
+    flex-direction: row;
   }
-  .SingleTrip__image img {
-    width: 100%;
-    max-height: 300px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+}
+
+.SingleTrip__bus-header {
+  background: #d84e55;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: white;
+}
+
+.bus-icon {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bus-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.SingleTrip__image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .SingleTrip__image {
+    width: 300px;
+    height: auto;
   }
-  .SingleTrip__busdetails {
-    line-height: 29px;
-    width: 100%;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px 0 hsla(0,0%,75%,.5);
-    border: 1px solid silver;
+}
+
+.SingleTrip__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SingleTrip__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+@media (min-width: 900px) {
+  .SingleTrip__content {
+    flex-direction: row;
+    gap: 20px;
   }
-  .SingleTrip__persondetails {
-    line-height: 29px;
-    padding: 40px;
-    margin-left: 40px;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px 0 hsla(0,0%,75%,.5);
-    border: 1px solid silver;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.SingleTrip__busdetails,
+.SingleTrip__persondetails {
+  flex: 1;
+}
+
+.detail-row {
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 600;
+  color: #777;
+  min-width: 80px;
+}
+
+.value {
+  color: #333;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 0.9em;
+  color: #888;
+  margin-left: auto;
+}
+
+.price {
+  font-size: 1.2em;
+  color: #d84e55;
+  font-weight: 700;
+}
+
+.contact-info p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
+}
+
+.contact-info i {
+  font-size: 18px;
+  color: #d84e55;
+}
+
+.passenger-list {
+  margin-top: 15px;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.passenger-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 0.95em;
+}
+
+.passenger-item i {
+  font-size: 16px;
+  color: #777;
+}

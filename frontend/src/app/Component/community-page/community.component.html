@@ -1,0 +1,26 @@
+<div class="community-container">
+  <h2 class="heading">Community Experiences</h2>
+
+  <div class="post-card" *ngFor="let post of posts">
+    <div class="user-info">
+      <h3>User: {{post.userId?.name || 'Anonymous'}}</h3>
+      <span class="route">{{post.source}} ➔ {{post.destination}}</span>
+      <p class="bus-name" *ngIf="post.busName"><strong>Bus:</strong> {{post.busName}}</p>
+    </div>
+    <div class="rating">
+      <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= post.rating">★</span>
+    </div>
+    <div class="post-content">
+      <p>{{post.story}}</p>
+      <div class="photos" *ngIf="post.photos && post.photos.length > 0">
+        <img *ngFor="let photo of post.photos" [src]="baseUrl + photo" alt="Trip photo"
+          (error)="handleImageError($event)">
+      </div>
+    </div>
+    <div class="post-footer">
+      <button class="like-btn" (click)="toggleLike(post)">
+        <span class="heart">♥</span> {{post.likesCount || 0}} Likes
+      </button>
+    </div>
+  </div>
+</div>

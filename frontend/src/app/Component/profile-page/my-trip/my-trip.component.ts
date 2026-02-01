@@ -5,9 +5,9 @@ import { Component, Input } from '@angular/core';
   templateUrl: './my-trip.component.html',
   styleUrl: './my-trip.component.css'
 })
-export class MyTripComponent  {
-  @Input() booking:any
- 
+export class MyTripComponent {
+  @Input() bookings: any[] = [];
+
 
   imageArr = [
     {
@@ -127,7 +127,7 @@ export class MyTripComponent  {
       images:
         "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/5483/35/FR/DL/AHGCEp.jpeg",
     },
-    
+
     {
       _id: {
         $oid: "604b8aedb3f0410d74d91bf8",
@@ -138,10 +138,7 @@ export class MyTripComponent  {
   ];
 
 
-  randomimage:string=''
-  ngOnInit(){
-    const randomindex=Math.floor(Math.random() * this.imageArr.length);
-    this.randomimage=this.imageArr[randomindex].images
+  ngOnInit() {
   }
   // getrandomimage():string{
   //   return this.imageArr[Math.floor(Math.random()*(18-0+1)+0)].images

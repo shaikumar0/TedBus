@@ -1,57 +1,48 @@
-<div class="SingleTrip" *ngFor="let booking of booking">
-    <div class="SingleTrip__image">
-      <img [src]="randomimage" alt="bus" />
-    </div>
-    <div style="display: flex; justify-content: space-evenly">
-      <div class="SingleTrip__busdetails">
-        <div class="heading" style="font-weight: 600; font-size: large;">Bus Details</div>
-        <!-- Insertion for Departure, Arrival details, and fare -->
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Departure Location: {{ booking.departureDetails.city }}
-        </p>
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Departure Time: {{ booking.departureDetails.time }}:00 hrs
-        </p>
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Departure Date: {{ booking.departureDetails.date }}
-        </p>
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Arrival Location: {{ booking.arrivalDetails.city }}
-        </p>
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Arrival Time: {{ booking.arrivalDetails.time }}:00 hrs
-        </p>
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Arrival Date: {{ booking.arrivalDetails.date }}
-        </p>
-        <p>
-          <span class="material-icons" >radio_button_checked</span> Total Fare: {{ booking.fare }}
-        </p>
-      </div>
-      <div class="SingleTrip__persondetails">
-        <div class="heading" style="font-weight: 600; font-size: large;">Passenger Details</div>
+<div class="trips-container">
+  <div class="no-trips" *ngIf="!bookings || bookings.length === 0">
+    <p>No trips found. Book your first journey today!</p>
+    <button routerLink="/" class="book-btn">Book Now</button>
+  </div>
 
-        <!-- Insertion for Passenger details -->
-        <p>
-          <span class="material-icons" >arrow_right_alt</span> Contact Email: {{ booking.email }}
-          </p>
-          <p>
-            <span class="material-icons" >arrow_right_alt</span> Contact Phone Number: {{ booking.phoneNumber }}
-          </p>
-          <div class="SingleTrip__customerDetails__passenger">
-            <div *ngFor="let passenger of booking.passengerDetails">
-              <p>
-                <span class="material-icons" >arrow_right_alt</span> Name: {{ passenger.name }}
-              </p>
-              <p>
-                <span class="material-icons" >arrow_right_alt</span> Gender: {{ passenger.gender }}
-              </p>
-              <p>
-                <span class="material-icons" >arrow_right_alt</span> Age: {{ passenger.age }}
-              </p>
-            </div>
+  <div class="SingleTrip" *ngFor="let booking of bookings">
+    <div class="SingleTrip__bus-header">
+      <div class="bus-icon">
+        <span class="material-icons">directions_bus</span>
+      </div>
+      <div class="bus-name">{{ booking.busName }}</div>
+    </div>
+    <div class="SingleTrip__content">
+      <div class="SingleTrip__busdetails">
+        <div class="heading">Journey Details</div>
+        <div class="detail-row">
+          <span class="label">Departure:</span>
+          <span class="value">{{ booking.departureDetails.city }} ({{ booking.departureDetails.time }}:00)</span>
+          <span class="date">{{ booking.departureDetails.date }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Arrival:</span>
+          <span class="value">{{ booking.arrivalDetails.city }} ({{ booking.arrivalDetails.time }}:00)</span>
+          <span class="date">{{ booking.arrivalDetails.date }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Fare:</span>
+          <span class="value price">₹{{ booking.fare }}</span>
+        </div>
+      </div>
+
+      <div class="SingleTrip__persondetails">
+        <div class="heading">Passenger Details</div>
+        <div class="contact-info">
+          <p><i class="material-icons">email</i> {{ booking.email }}</p>
+          <p><i class="material-icons">phone</i> {{ booking.phoneNumber }}</p>
+        </div>
+        <div class="passenger-list">
+          <div *ngFor="let passenger of booking.passengerDetails" class="passenger-item">
+            <i class="material-icons">person</i>
+            <span>{{ passenger.name }} ({{ passenger.gender }}, {{ passenger.age }})</span>
           </div>
+        </div>
       </div>
     </div>
   </div>
-  
+</div>

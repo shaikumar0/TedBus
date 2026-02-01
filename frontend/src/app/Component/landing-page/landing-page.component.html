@@ -50,7 +50,10 @@
                         <input matInput class="outline-none opacity-0 scale-[3] h-14 w-[30px] absolute left-14 z-10"
                             placeholder="Date" [matDatepicker]="picker" (click)="picker.open()"
                             (dateChange)="matchDate($event)">
-                        <p class="text-gray-400">Date</p>
+                        <p class="text-gray-700">
+                            {{ date ? date : 'Date' }}
+                        </p>
+
                         <mat-datepicker #picker></mat-datepicker>
                         <!-- <p class="text-gray-400">Date</p> -->
                     </div>

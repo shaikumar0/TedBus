@@ -1,0 +1,107 @@
+.share-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background: #f4f6f8;
+    min-height: 80vh;
+}
+
+.share-card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.share-header {
+    padding: 25px;
+    background: #4a4a4a;
+    color: white;
+    text-align: center;
+}
+
+.share-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.share-form {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #444;
+}
+
+.star-rating {
+    font-size: 32px;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating span {
+    margin-right: 5px;
+}
+
+.star-rating span.filled {
+    color: #ffb700;
+}
+
+textarea,
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.photo-preview img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 6px;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    flex: 2;
+    background: #d84e55;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: transparent;
+    border: 1px solid #999;
+    color: #666;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

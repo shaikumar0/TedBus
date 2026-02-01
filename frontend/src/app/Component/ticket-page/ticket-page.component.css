@@ -1,0 +1,117 @@
+.ticket-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.ticket-card {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.ticket-header {
+  background: #d84e55;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.ticket-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.ticket-id {
+  opacity: 0.9;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.ticket-body {
+  padding: 20px;
+}
+
+.trip-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.location h3 {
+  margin: 0 0 5px;
+  color: #333;
+}
+
+.location p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.arrow {
+  color: #999;
+  font-size: 20px;
+}
+
+.passenger-info {
+  margin-bottom: 20px;
+}
+
+.passenger-info h4, .fare-info h4 {
+  margin: 0 0 10px;
+  color: #444;
+  font-size: 16px;
+}
+
+.fare-amount {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2da15f;
+}
+
+.ticket-actions {
+  padding: 20px;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-share {
+  background: #ffb700;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-home {
+  background: transparent;
+  color: #d84e55;
+  border: 1px solid #d84e55;
+}
+
+button:hover {
+  opacity: 0.9;
+}

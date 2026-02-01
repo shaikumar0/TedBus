@@ -1,0 +1,48 @@
+<div class="ticket-container">
+  <div class="ticket-card" *ngIf="bookingDetails">
+    <div class="ticket-header">
+      <h2>Booking Confirmed!</h2>
+      <p class="ticket-id">Ticket ID: {{bookingDetails._id || 'PENDING'}}</p>
+    </div>
+    
+    <div class="ticket-body">
+      <div class="trip-info">
+        <div class="location">
+          <h3>{{bookingDetails.departureDetails?.city}}</h3>
+          <p>{{bookingDetails.departureDetails?.time}}:00</p>
+          <p>{{bookingDetails.departureDetails?.date | date}}</p>
+        </div>
+        <div class="arrow">➔</div>
+        <div class="location">
+          <h3>{{bookingDetails.arrivalDetails?.city}}</h3>
+          <p>{{bookingDetails.arrivalDetails?.time}}:00</p>
+          <p>{{bookingDetails.arrivalDetails?.date | date}}</p>
+        </div>
+      </div>
+
+      <div class="passenger-info">
+        <h4>Passengers</h4>
+        <div *ngFor="let p of bookingDetails.passengerDetails">
+          {{p.name}} ({{p.age}}, {{p.gender}}) - Seat {{bookingDetails.seats}}
+        </div>
+      </div>
+
+      <div class="fare-info">
+        <h4>Total Fare</h4>
+        <p class="fare-amount">Rs. {{bookingDetails.fare}}</p>
+      </div>
+    </div>
+
+    <div class="ticket-actions">
+      <button class="btn-share" (click)="shareExperience()">
+        <span class="icon">★</span> Share Your Experience
+      </button>
+      <button class="btn-home" (click)="goHome()">Back to Home</button>
+    </div>
+  </div>
+
+  <div class="no-ticket" *ngIf="!bookingDetails">
+    <h3>No booking details found.</h3>
+    <button (click)="goHome()">Search Buses</button>
+  </div>
+</div>

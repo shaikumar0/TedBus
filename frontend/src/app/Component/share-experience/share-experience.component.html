@@ -1,0 +1,41 @@
+<div class="share-container">
+    <div class="share-card">
+        <div class="share-header">
+            <h2>Share Your Journey</h2>
+            <p *ngIf="booking">
+                {{booking.departureDetails?.city}} to {{booking.arrivalDetails?.city}}
+            </p>
+        </div>
+
+        <div class="share-form">
+            <div class="form-group">
+                <label>How would you rate your trip?</label>
+                <div class="star-rating">
+                    <span *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)"
+                        [class.filled]="star <= rating">★</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Tell us your story</label>
+                <textarea [(ngModel)]="story"
+                    placeholder="How was the bus? Was it on time? Any tips for other travelers?" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Add Photos (Max 5)</label>
+                <input type="file" (change)="onFileSelected($event)" multiple accept="image/*" />
+                <div class="photo-preview" *ngIf="previewUrls.length > 0">
+                    <img *ngFor="let url of previewUrls" [src]="url" alt="Preview">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-submit" (click)="submitExperience()" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Posting...' : 'Post to Community' }}
+                </button>
+                <button class="btn-cancel" (click)="router.navigate(['/community'])">Skip</button>
+            </div>
+        </div>
+    </div>
+</div>

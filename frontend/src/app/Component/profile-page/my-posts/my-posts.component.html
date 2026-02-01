@@ -1,0 +1,22 @@
+<div class="my-posts-container">
+  <h2 class="heading">My Posts</h2>
+
+  <div *ngIf="myPosts.length === 0" class="empty">
+    You haven’t shared any experiences yet.
+  </div>
+
+  <div class="post-card" *ngFor="let post of myPosts">
+    <div class="post-header">
+      <span class="route">
+        {{ post.source }} → {{ post.destination }}
+      </span>
+    </div>
+
+    <p class="story">{{ post.story }}</p>
+
+    <div class="post-footer">
+      <span>⭐ {{ post.rating }}/5</span>
+      <span>❤️ {{ post.likes }}</span>
+    </div>
+  </div>
+</div>
