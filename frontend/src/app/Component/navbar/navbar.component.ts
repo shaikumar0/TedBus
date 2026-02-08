@@ -4,6 +4,10 @@ import { CustomerService } from '../../service/customer.service';
 import { Customer } from '../../model/customer.model';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { ThemeService } from '../../service/theme.service';
+
+
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +15,15 @@ import { environment } from '../../../environments/environment';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-  constructor(private router: Router, private customerservice: CustomerService) { }
+  constructor(private router: Router, private customerservice: CustomerService, public themeService: ThemeService, public translate: TranslateService) {
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+  }
+
   isloggedIn: boolean = false
   ngOnInit(): void {
     if (sessionStorage.getItem("Loggedinuser")) {
@@ -54,6 +66,7 @@ export class NavbarComponent implements OnInit {
       next: (response) => {
         console.log('POST success', response);
         sessionStorage.setItem("Loggedinuser", JSON.stringify(response))
+        this.themeService.setLightMode();
       },
       error: (error) => {
         console.error('Post request failed', error)
@@ -63,6 +76,7 @@ export class NavbarComponent implements OnInit {
   handlelogout() {
     google.accounts.id.disableAutoSelect();
     sessionStorage.removeItem('Loggedinuser');
+    this.themeService.setLightMode();
     window.location.reload()
   }
   navigate(route: string) {

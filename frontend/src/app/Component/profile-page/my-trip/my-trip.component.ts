@@ -1,146 +1,85 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-trip',
   templateUrl: './my-trip.component.html',
   styleUrl: './my-trip.component.css'
 })
-export class MyTripComponent {
+export class MyTripComponent implements OnInit, OnChanges {
   @Input() bookings: any[] = [];
+  upcomingTrips: any[] = [];
+  completedTrips: any[] = [];
+  cancelledTrips: any[] = [];
+  activeTab: 'upcoming' | 'completed' | 'cancelled' = 'upcoming';
 
+  constructor(private router: Router, private http: HttpClient) { }
 
-  imageArr = [
-    {
-      _id: { $oid: "6049b8a97501a24470b9a526" },
-      images: "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/1087/GW/DL/6fNUIf.jpeg"
-    },
-    // Other image objects...
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a527",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/1087/GW/DL/6fNUIf.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a528",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/9365/1087/GW/DL/hDsqel.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a529",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/10/411/ST/L/penRe7.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a52a",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/19449/814/FR/DL/PuizKJ.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a52b",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/450/OT/L/lejRej.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a52c",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/54/ST/DL/11XMg2.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a52d",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/16/OT/L/lejRej.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049b8a97501a24470b9a52e",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/1087/GW/DL/6fNUIf.jpeg",
-    },
-    {
-      _id: {
-        $oid: "6049d3567501a24470b9a533",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/4957/54/FR/L/lejRej.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bef",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/9365/1087/GW/DL/hDsqel.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf0",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/1087/GW/DL/6fNUIf.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf1",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/1087/GW/DL/6fNUIf.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf2",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/5483/35/FR/DL/AHGCEp.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf3",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/10/54/FR/L/lejRej.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf4",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/420/SI/DL/RdzzBG.jpeg",
-    },
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf6",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/5483/35/FR/DL/AHGCEp.jpeg",
-    },
-
-    {
-      _id: {
-        $oid: "604b8aedb3f0410d74d91bf8",
-      },
-      images:
-        "https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/2323/1087/GW/DL/6fNUIf.jpeg",
-    },
-  ];
-
+  ngOnChanges() {
+    this.categorizeTrips();
+  }
 
   ngOnInit() {
+    this.categorizeTrips();
   }
-  // getrandomimage():string{
-  //   return this.imageArr[Math.floor(Math.random()*(18-0+1)+0)].images
-  // }
+
+  categorizeTrips() {
+    if (!this.bookings) return;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Cancelled Trips
+    this.cancelledTrips = this.bookings.filter(booking => booking.status === 'CANCELLED');
+
+    // Upcoming Trips: Future date AND NOT cancelled
+    this.upcomingTrips = this.bookings.filter(booking => {
+      if (booking.status === 'CANCELLED') return false;
+      const dDate = new Date(booking.departureDetails?.date || booking.bookingDate);
+      dDate.setHours(0, 0, 0, 0);
+      return dDate >= today;
+    });
+
+    // Completed Trips: Past date AND NOT cancelled
+    this.completedTrips = this.bookings.filter(booking => {
+      if (booking.status === 'CANCELLED') return false;
+      const dDate = new Date(booking.departureDetails?.date || booking.bookingDate);
+      dDate.setHours(0, 0, 0, 0);
+      return dDate < today;
+    });
+
+  }
+
+  shareExperience(booking: any) {
+    // Navigate to experience sharing page with booking details
+    this.router.navigate(['/share-experience'], { state: { booking } });
+  }
+
+  cancelBooking(bookingId: string) {
+    if (confirm('Are you sure you want to cancel this booking?')) {
+      this.http.post(`http://localhost:5000/cancel/${bookingId}`, {}).subscribe({
+        next: (updatedBooking: any) => {
+          alert('Booking cancelled successfully.');
+          // Update local state to reflect cancellation immediately
+          const index = this.bookings.findIndex(b => b._id === bookingId);
+          if (index !== -1) {
+            this.bookings[index].status = 'CANCELLED';
+            this.categorizeTrips();
+          }
+        },
+        error: (err) => {
+          console.error('Error cancelling booking', err);
+          alert('Failed to cancel booking.');
+        }
+      });
+    }
+  }
+
+  setActiveTab(tab: 'upcoming' | 'completed' | 'cancelled') {
+    this.activeTab = tab;
+  }
 }
+
+
+

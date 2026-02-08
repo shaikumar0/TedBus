@@ -22,8 +22,9 @@ const createExperience = asyncHandler(async (req, res) => {
     throw new Error("Required fields are missing");
   }
 
-  // Fetch Booking to get Bus ID
+  // Fetch Booking and Bus to get Route ID and Bus Name
   let busName = "Unknown Bus";
+  let routeId = null;
   if (journeyId) {
     try {
       const booking = await Booking.findById(journeyId);
@@ -31,10 +32,11 @@ const createExperience = asyncHandler(async (req, res) => {
         const bus = await Bus.findById(booking.busId);
         if (bus) {
           busName = bus.operatorName;
+          routeId = bus.routes; // This refers to the Route ID
         }
       }
     } catch (error) {
-      console.error("Error fetching bus details:", error);
+      console.error("Error fetching bus/route details:", error);
     }
   }
 
@@ -43,6 +45,7 @@ const createExperience = asyncHandler(async (req, res) => {
   const experience = await Experience.create({
     userId,
     journeyId,
+    routeId,
     source,
     destination,
     story,

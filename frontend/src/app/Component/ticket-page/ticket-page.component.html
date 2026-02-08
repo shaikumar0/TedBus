@@ -4,7 +4,7 @@
       <h2>Booking Confirmed!</h2>
       <p class="ticket-id">Ticket ID: {{bookingDetails._id || 'PENDING'}}</p>
     </div>
-    
+
     <div class="ticket-body">
       <div class="trip-info">
         <div class="location">
@@ -34,11 +34,9 @@
     </div>
 
     <div class="ticket-actions">
-      <button class="btn-share" (click)="shareExperience()">
-        <span class="icon">★</span> Share Your Experience
-      </button>
       <button class="btn-home" (click)="goHome()">Back to Home</button>
     </div>
+
   </div>
 
   <div class="no-ticket" *ngIf="!bookingDetails">

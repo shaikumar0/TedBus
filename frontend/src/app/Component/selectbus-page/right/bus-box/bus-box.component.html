@@ -23,15 +23,16 @@
                 {{routedetails.arrivalLocation.name}}
             </div>
         </div>
-        <div class="busBoxSection15">
+        <div class="busBoxSection15" (click)="toggleReviews()" style="cursor: pointer;" matTooltip="View Route Reviews">
             <div>
                 <i class="material-icons">star</i>
-                <div>{{avgrating}}</div>
+                <div>{{avgrating | number:'1.1-1'}}</div>
             </div>
             <div><i class="material-icons">people</i>
                 <div>{{totalreview}}</div>
             </div>
         </div>
+
         <div class="busBoxSection16">
             <div>
                 <div>INR</div>
@@ -78,8 +79,28 @@
         </div>
     </div>
     <div class="busBoxSection3">
-        <app-bottom-tab [busid]='busid' [filledseats]="filledseats" [seatprice]="seatprivce" [routedetials]="routedetails"
-            [busarrivaltime]="busarrivaltime" [busdeparturetime]="busdeparturetime"
-            [operatorname]="operatorname"></app-bottom-tab>
+        <app-bottom-tab [busid]='busid' [filledseats]="filledseats" [seatprice]="seatprivce"
+            [routedetials]="routedetails" [busarrivaltime]="busarrivaltime" [busdeparturetime]="busdeparturetime"
+            [operatorname]="operatorname" [date]="date"></app-bottom-tab>
+    </div>
+
+    <div class="reviews-section" *ngIf="showReviews">
+        <h3>User Reviews</h3>
+        <div *ngIf="reviews.length === 0" class="no-reviews">
+            No reviews yet for this route.
+        </div>
+        <div class="review-card" *ngFor="let review of reviews">
+            <div class="review-header">
+                <span class="user-name">{{review.userId?.name || 'Anonymous'}}</span>
+                <span class="review-rating">
+                    <i class="material-icons" *ngFor="let star of [1,2,3,4,5]"
+                        [style.color]="star <= review.rating ? '#ffc107' : '#e4e5e9'">star</i>
+                </span>
+            </div>
+            <p class="review-story">{{review.story}}</p>
+            <div class="review-footer">
+                {{review.createdAt | date:'mediumDate'}}
+            </div>
+        </div>
     </div>
 </div>

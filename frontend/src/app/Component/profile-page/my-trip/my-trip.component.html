@@ -1,48 +1,211 @@
-<div class="trips-container">
+<div class="trips-container dark:bg-black transition-colors min-h-screen p-4">
+
+  <!-- Tabs -->
+  <div class="flex border-b border-gray-200 dark:border-gray-700 mb-6">
+    <button class="py-2 px-4 text-sm font-medium text-center focus:outline-none transition-colors border-b-2"
+      [ngClass]="activeTab === 'upcoming' ? 'border-red-500 text-red-600 dark:text-red-500' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+      (click)="setActiveTab('upcoming')">
+      Upcoming
+    </button>
+    <button class="py-2 px-4 text-sm font-medium text-center focus:outline-none transition-colors border-b-2"
+      [ngClass]="activeTab === 'completed' ? 'border-red-500 text-red-600 dark:text-red-500' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+      (click)="setActiveTab('completed')">
+      Completed
+    </button>
+    <button class="py-2 px-4 text-sm font-medium text-center focus:outline-none transition-colors border-b-2"
+      [ngClass]="activeTab === 'cancelled' ? 'border-red-500 text-red-600 dark:text-red-500' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+      (click)="setActiveTab('cancelled')">
+      Cancelled
+    </button>
+  </div>
+
+
   <div class="no-trips" *ngIf="!bookings || bookings.length === 0">
-    <p>No trips found. Book your first journey today!</p>
+    <p class="dark:text-gray-300">No trips found. Book your first journey today!</p>
     <button routerLink="/" class="book-btn">Book Now</button>
   </div>
 
-  <div class="SingleTrip" *ngFor="let booking of bookings">
-    <div class="SingleTrip__bus-header">
-      <div class="bus-icon">
-        <span class="material-icons">directions_bus</span>
-      </div>
-      <div class="bus-name">{{ booking.busName }}</div>
+  <!-- Upcoming Trips Content -->
+  <div *ngIf="activeTab === 'upcoming'">
+    <div *ngIf="upcomingTrips.length === 0" class="text-center py-8 dark:text-gray-400">
+      No upcoming trips.
     </div>
-    <div class="SingleTrip__content">
-      <div class="SingleTrip__busdetails">
-        <div class="heading">Journey Details</div>
-        <div class="detail-row">
-          <span class="label">Departure:</span>
-          <span class="value">{{ booking.departureDetails.city }} ({{ booking.departureDetails.time }}:00)</span>
-          <span class="date">{{ booking.departureDetails.date }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">Arrival:</span>
-          <span class="value">{{ booking.arrivalDetails.city }} ({{ booking.arrivalDetails.time }}:00)</span>
-          <span class="date">{{ booking.arrivalDetails.date }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">Fare:</span>
-          <span class="value price">₹{{ booking.fare }}</span>
-        </div>
-      </div>
+    <div
+      class="SingleTrip dark:bg-[#1f1f1f] dark:border-gray-700 transition-colors mb-4 rounded-lg shadow-sm border p-4"
+      *ngFor="let booking of upcomingTrips">
 
-      <div class="SingleTrip__persondetails">
-        <div class="heading">Passenger Details</div>
-        <div class="contact-info">
-          <p><i class="material-icons">email</i> {{ booking.email }}</p>
-          <p><i class="material-icons">phone</i> {{ booking.phoneNumber }}</p>
+      <div class="SingleTrip__bus-header flex justify-between items-center mb-4 pb-2 border-b dark:border-gray-700">
+        <div class="flex items-center gap-2">
+          <div class="bus-icon text-red-500">
+            <span class="material-icons">directions_bus</span>
+          </div>
+          <div class="bus-name font-bold dark:text-white">{{ booking.busName }}</div>
         </div>
-        <div class="passenger-list">
-          <div *ngFor="let passenger of booking.passengerDetails" class="passenger-item">
-            <i class="material-icons">person</i>
-            <span>{{ passenger.name }} ({{ passenger.gender }}, {{ passenger.age }})</span>
+        <button
+          class="bg-white text-red-500 border border-red-500 px-3 py-1 rounded text-sm hover:bg-red-50 dark:bg-transparent dark:hover:bg-gray-800 transition"
+          (click)="cancelBooking(booking._id)">
+          Cancel Booking
+        </button>
+
+      </div>
+      <div class="SingleTrip__content grid md:grid-cols-2 gap-4">
+        <div class="SingleTrip__busdetails">
+          <div class="heading text-sm font-semibold text-gray-500 uppercase mb-2 dark:text-gray-400">Journey Details
+          </div>
+
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Departure:</span>
+            <span class="value dark:text-white">{{ booking.departureDetails.city }} ({{ booking.departureDetails.time
+              }}:00)</span>
+            <span class="date text-gray-500 text-xs dark:text-gray-500">{{ booking.departureDetails.date }}</span>
+
+          </div>
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Arrival:</span>
+            <span class="value dark:text-white">{{ booking.arrivalDetails.city }} ({{ booking.arrivalDetails.time
+              }}:00)</span>
+            <span class="date text-gray-500 text-xs dark:text-gray-500">{{ booking.arrivalDetails.date }}</span>
+
+          </div>
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Fare:</span>
+            <span class="value price font-bold text-green-600">₹{{ booking.fare }}</span>
+
+          </div>
+        </div>
+
+        <div class="SingleTrip__persondetails">
+          <div class="heading text-sm font-semibold text-gray-500 uppercase mb-2 dark:text-gray-400">Passenger Details
+          </div>
+          <div class="contact-info text-sm dark:text-gray-300 mb-2">
+
+            <p class="flex items-center gap-1"><i class="material-icons text-gray-400 text-sm">email</i> {{
+              booking.email }}</p>
+            <p class="flex items-center gap-1"><i class="material-icons text-gray-400 text-sm">phone</i> {{
+              booking.phoneNumber }}</p>
+          </div>
+          <div class="passenger-list">
+            <div *ngFor="let passenger of booking.passengerDetails"
+              class="passenger-item text-sm dark:text-gray-300 flex items-center gap-1">
+
+              <i class="material-icons text-gray-400 text-sm">person</i>
+              <span>{{ passenger.name }} ({{ passenger.gender }}, {{ passenger.age }})</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Completed Trips Content -->
+  <div *ngIf="activeTab === 'completed'">
+    <div *ngIf="completedTrips.length === 0" class="text-center py-8 dark:text-gray-400">
+      No completed trips.
+    </div>
+    <div
+      class="SingleTrip completed dark:bg-[#1f1f1f] dark:border-gray-700 transition-colors mb-4 rounded-lg shadow-sm border p-4"
+      *ngFor="let booking of completedTrips">
+
+      <div class="SingleTrip__bus-header flex justify-between items-center mb-4 pb-2 border-b dark:border-gray-700">
+        <div class="flex items-center gap-2">
+          <div class="bus-icon text-green-500">
+            <span class="material-icons">directions_bus</span>
+          </div>
+          <div class="bus-name font-bold dark:text-white">{{ booking.busName }}</div>
+        </div>
+        <button class="share-btn flex items-center gap-1 text-blue-600 hover:text-blue-800"
+          (click)="shareExperience(booking)" *ngIf="!booking.hasSharedExperience">
+          <i class="material-icons text-sm">rate_review</i> Share Experience
+        </button>
+      </div>
+
+      <div class="SingleTrip__content grid md:grid-cols-2 gap-4">
+        <div class="SingleTrip__busdetails">
+          <div class="heading text-sm font-semibold text-gray-500 uppercase mb-2 dark:text-gray-400">Journey Details
+          </div>
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Departure:</span>
+            <span class="value dark:text-white">{{ booking.departureDetails.city }} ({{ booking.departureDetails.time
+              }}:00)</span>
+            <span class="date text-gray-500 text-xs dark:text-gray-500">{{ booking.departureDetails.date }}</span>
+
+          </div>
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Arrival:</span>
+            <span class="value dark:text-white">{{ booking.arrivalDetails.city }} ({{ booking.arrivalDetails.time
+              }}:00)</span>
+            <span class="date text-gray-500 text-xs dark:text-gray-500">{{ booking.arrivalDetails.date }}</span>
+
+          </div>
+        </div>
+
+        <div class="SingleTrip__persondetails">
+          <div class="heading text-sm font-semibold text-gray-500 uppercase mb-2 dark:text-gray-400">Passenger Details
+          </div>
+          <div class="passenger-list">
+            <div *ngFor="let passenger of booking.passengerDetails"
+              class="passenger-item text-sm dark:text-gray-300 flex items-center gap-1">
+              <i class="material-icons text-gray-400 text-sm">person</i>
+              <span>{{ passenger.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancelled Trips Content -->
+  <div *ngIf="activeTab === 'cancelled'">
+    <div *ngIf="cancelledTrips.length === 0" class="text-center py-8 dark:text-gray-400">
+      No cancelled trips.
+    </div>
+    <div
+      class="SingleTrip cancelled dark:bg-[#1f1f1f] dark:border-gray-700 transition-colors mb-4 rounded-lg shadow-sm border p-4 opacity-75"
+      *ngFor="let booking of cancelledTrips">
+
+      <div class="SingleTrip__bus-header flex justify-between items-center mb-4 pb-2 border-b dark:border-gray-700">
+        <div class="flex items-center gap-2">
+          <div class="bus-icon text-gray-500">
+            <span class="material-icons">cancel</span>
+          </div>
+          <div class="bus-name font-bold dark:text-white line-through">{{ booking.busName }}</div>
+        </div>
+        <span class="text-red-500 font-bold border border-red-500 px-2 py-1 rounded text-xs">CANCELLED</span>
+      </div>
+
+      <div class="SingleTrip__content grid md:grid-cols-2 gap-4">
+        <div class="SingleTrip__busdetails">
+          <div class="heading text-sm font-semibold text-gray-500 uppercase mb-2 dark:text-gray-400">Journey Details
+          </div>
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Departure:</span>
+            <span class="value dark:text-white">{{ booking.departureDetails.city }} ({{ booking.departureDetails.time
+              }}:00)</span>
+            <span class="date text-gray-500 text-xs dark:text-gray-500">{{ booking.departureDetails.date }}</span>
+
+          </div>
+          <div class="detail-row flex justify-between mb-1">
+            <span class="label text-gray-600 dark:text-gray-400">Arrival:</span>
+            <span class="value dark:text-white">{{ booking.arrivalDetails.city }} ({{ booking.arrivalDetails.time
+              }}:00)</span>
+            <span class="date text-gray-500 text-xs dark:text-gray-500">{{ booking.arrivalDetails.date }}</span>
+
+          </div>
+        </div>
+
+        <div class="SingleTrip__persondetails">
+          <div class="heading text-sm font-semibold text-gray-500 uppercase mb-2 dark:text-gray-400">Passenger Details
+          </div>
+          <div class="passenger-list">
+            <div *ngFor="let passenger of booking.passengerDetails"
+              class="passenger-item text-sm dark:text-gray-300 flex items-center gap-1">
+              <i class="material-icons text-gray-400 text-sm">person</i>
+              <span>{{ passenger.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

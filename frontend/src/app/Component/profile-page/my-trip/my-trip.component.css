@@ -172,3 +172,53 @@
   font-size: 16px;
   color: #777;
 }
+
+/* New Styles */
+.section-title {
+  font-size: 1.4rem;
+  color: #333;
+  margin: 30px 0 15px;
+  padding-left: 10px;
+  border-left: 4px solid #d84e55;
+}
+
+.completed-section {
+  margin-top: 40px;
+  border-top: 1px dashed #ccc;
+  padding-top: 20px;
+}
+
+.SingleTrip.completed {
+  filter: grayscale(0.2);
+  opacity: 0.95;
+}
+
+.SingleTrip.completed .SingleTrip__bus-header {
+  background: #607d8b;
+  /* Muted color for completed trips */
+}
+
+.share-btn {
+  margin-left: auto;
+  background: white;
+  color: #607d8b;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.share-btn:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.share-btn i {
+  font-size: 18px;
+}

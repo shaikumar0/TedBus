@@ -6,28 +6,30 @@ import { Component, Input } from '@angular/core';
   styleUrl: './view-seats.component.css'
 })
 export class ViewSeatsComponent {
-@Input() filledseats:number[]=[]
-@Input() seatprice:number=0;
-@Input() routedetails: any;
-@Input() busid:string=''
-@Input() busarrivaltime: number =0;
-@Input() busdeparturetime:number=0;
-@Input() operatorname:string=''
-selectedseats:number[]=[];
-boardanddrop:boolean=false;
+  @Input() filledseats: number[] = []
+  @Input() seatprice: number = 0;
+  @Input() routedetails: any;
+  @Input() busid: string = ''
+  @Input() busarrivaltime: number = 0;
+  @Input() busdeparturetime: number = 0;
+  @Input() operatorname: string = ''
+  @Input() date: string = ''
+  selectedseats: number[] = [];
 
-generatearray(length:number):number[]{
-  return Array.from({length},(_,index)=>index +1);
-}
+  boardanddrop: boolean = false;
 
-handleselectedseats(seatno:number):void{
-  if(this.selectedseats.includes(seatno)){
-    this.selectedseats=this.selectedseats.filter(item=> item !== seatno);
-  }else{
-    this.selectedseats.push(seatno)
+  generatearray(length: number): number[] {
+    return Array.from({ length }, (_, index) => index + 1);
   }
-}
-handleboarddrop():void{
-  this.boardanddrop=!this.boardanddrop
-}
+
+  handleselectedseats(seatno: number): void {
+    if (this.selectedseats.includes(seatno)) {
+      this.selectedseats = this.selectedseats.filter(item => item !== seatno);
+    } else {
+      this.selectedseats.push(seatno)
+    }
+  }
+  handleboarddrop(): void {
+    this.boardanddrop = !this.boardanddrop
+  }
 }

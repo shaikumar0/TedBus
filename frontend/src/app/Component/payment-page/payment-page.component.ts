@@ -41,7 +41,11 @@ export class PaymentPageComponent implements OnInit {
       const busArrivalTime = params['busarrivaltime'];
       const busDepartureTime = params['busdeparturetime'];
       const iscoviddonated = params['passiscoviddonate'];
-      const operatorname = params['operatorname']
+      const operatorname = params['operatorname'];
+      const journeyDate = params['date'];
+      if (journeyDate) {
+        this.bookingdate = journeyDate;
+      }
       this.operatorname = operatorname
       this.passseatarray = passSeatsArray
       this.email = email
@@ -55,6 +59,7 @@ export class PaymentPageComponent implements OnInit {
       this.iscoviddonated = iscoviddonated
       this.getloggedinuser()
     })
+
 
     this.dataservice.currentdata.subscribe(data => {
       this.routedetails = data;

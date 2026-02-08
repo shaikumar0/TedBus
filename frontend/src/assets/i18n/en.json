@@ -1,0 +1,49 @@
+{
+    "NAV": {
+        "BUS_TICKETS": "Bus Tickets",
+        "TRAIN_TICKETS": "Train Tickets",
+        "COMMUNITY": "Community",
+        "HELP": "Help",
+        "ACCOUNT": "Account",
+        "MY_TRIPS": "My Trips",
+        "WALLET_CARDS": "Wallet/Cards",
+        "MY_PROFILE": "My Profile",
+        "WALLET": "Wallet",
+        "SIGN_OUT": "Sign Out",
+        "LOGIN": "Login / Sign Up"
+    },
+    "LANDING": {
+        "HERO_TITLE": "India's No. 1 Online Bus Ticket Booking Site",
+        "SEARCH": {
+            "FROM": "From",
+            "TO": "To",
+            "DATE": "Date",
+            "SEARCH_BTN": "SEARCH BUSES"
+        },
+        "OFFERS": {
+            "TITLE": "TRENDING OFFERS",
+            "VIEW_ALL": "View All",
+            "SAVE_250": "Save up to Rs 250 on bus tickets",
+            "SAVE_300_AP": "Save up to Rs 300 on AP, TS routes",
+            "SAVE_300_RJ": "Save up to Rs 300 on RJ, MH, Goa, MP",
+            "SAVE_200_KL": "Save up to Rs 200 in Kerala routes",
+            "VALID_TILL": "Valid till 30 Nov"
+        },
+        "FAQ": {
+            "TITLE": "FREQUENTLY ASKED QUESTIONS",
+            "GENERAL": "General",
+            "TICKET_RELATED": "Ticket-related",
+            "PAYMENT": "Payment",
+            "CANCELLATION": "Cancellation & Refund",
+            "INSURANCE": "Insurance",
+            "Q1": "Can I track the location of my booked bus online?",
+            "A1": "Yes, you can track your <strong>bus online</strong> by using our bus tracking app feature called <a class=\"text-blue-500\">Track My Bus</a>. This feature allows passengers and their families to track the live bus tracking location.",
+            "Q2": "Why book bus tickets online on RedBus?",
+            "Q3": "Do I need to create an account on the RedBus site to book my bus ticket?",
+            "Q4": "Does bus booking online cost me more?",
+            "Q5": "How can I get the discounts on the bus booking?",
+            "Q6": "What's New in Bus Booking on RedBus?",
+            "Q7": "Can I book a Government bus ticket on RedBus?"
+        }
+    }
+}

@@ -20,6 +20,12 @@ const experienceSchema = new mongoose.Schema(
       required: true
     },
 
+    routeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Routes",
+      index: true
+    },
+
     source: {
       type: String,
       required: true,

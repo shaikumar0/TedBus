@@ -31,4 +31,10 @@ export class ExperienceService {
     }
     return this.http.post(`${this.baseUrl}/${post._id}/like`, { userId });
   }
+
+  getRouteReviews(routeId: string): Observable<any> {
+    // New endpoint is /route-reviews/:routeId
+    const rootUrl = this.baseUrl.replace('/experience', '');
+    return this.http.get(`${rootUrl}/route-reviews/${routeId}`);
+  }
 }

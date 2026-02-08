@@ -32,7 +32,20 @@ import { BusBookingFormComponent } from './Component/selectbus-page/right/bus-bo
 import { PaymentPageComponent } from './Component/payment-page/payment-page.component';
 import { ProfilePageComponent } from './Component/profile-page/profile-page.component';
 import { MyTripComponent } from './Component/profile-page/my-trip/my-trip.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
+
+export class CustomTranslateLoader implements TranslateLoader {
+  constructor(private http: HttpClient) { }
+  getTranslation(lang: string): Observable<any> {
+    return this.http.get(`./assets/i18n/${lang}.json`);
+  }
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new CustomTranslateLoader(http);
+}
 
 import { CommunityComponent } from './Component/community-page/community.component';
 import { TicketPageComponent } from './Component/ticket-page/ticket-page.component';
@@ -77,7 +90,13 @@ import { ShareExperienceComponent } from './Component/share-experience/share-exp
     MatSidenavModule,
     MatDividerModule,
     HttpClientModule,
-    HttpClientModule
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [provideNativeDateAdapter()],
   bootstrap: [AppComponent]
