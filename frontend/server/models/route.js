@@ -19,6 +19,12 @@ const routesSchema = new Schema({
     type: Number,
     required: true,
   },
+  path: [
+    {
+      lat: { type: Number, required: true },
+      lng: { type: Number, required: true }
+    }
+  ]
 });
 
 module.exports = mongoose.model("Routes", routesSchema);

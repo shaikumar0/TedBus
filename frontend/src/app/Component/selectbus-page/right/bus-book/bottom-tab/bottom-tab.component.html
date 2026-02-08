@@ -7,7 +7,11 @@
     <div>|</div>
     <div (click)="handletabstate(3)">Booking Policies</div>
     <div>|</div>
-    <div (click)="handletabstate(4)">VIEW SEATS</div>
+    <div [routerLink]="['/route-details', routedetials._id]"
+        [queryParams]="{source: routedetials.departureLocation.name, destination: routedetials.arrivalLocation.name}"
+        style="cursor: pointer; font-weight: bold; color: #d84e55;">VIEW ROUTE</div>
+    <div>|</div>
+    <div (click)="handletabstate(4)" style="cursor: pointer;">VIEW SEATS</div>
 </div>
 
 

@@ -1,0 +1,82 @@
+<div class="route-details-container">
+    <div class="header-section">
+        <h1>{{routeInfo.name}}</h1>
+        <p>{{routeInfo.description}}</p>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map-section" *ngIf="routeInfo.path && routeInfo.path.length > 0">
+        <h2>Route Map</h2>
+        <div id="map" style="height: 400px; width: 100%; border-radius: 8px; margin-bottom: 20px;"></div>
+    </div>
+
+    <div class="ratings-overview">
+        <div class="rating-box">
+            <span class="avg-rating">{{averageRating | number:'1.1-1'}}</span>
+            <div class="stars">
+                <i class="material-icons" [style.color]="averageRating >= 1 ? '#ffc107' : '#e4e5e9'">star</i>
+                <i class="material-icons" [style.color]="averageRating >= 2 ? '#ffc107' : '#e4e5e9'">star</i>
+                <i class="material-icons" [style.color]="averageRating >= 3 ? '#ffc107' : '#e4e5e9'">star</i>
+                <i class="material-icons" [style.color]="averageRating >= 4 ? '#ffc107' : '#e4e5e9'">star</i>
+                <i class="material-icons" [style.color]="averageRating >= 5 ? '#ffc107' : '#e4e5e9'">star</i>
+            </div>
+            <span class="total-reviews">{{totalReviews}} Reviews</span>
+        </div>
+    </div>
+
+    <div class="reviews-list-section">
+        <h2>User Reviews</h2>
+        <div *ngIf="reviews.length === 0" class="no-reviews">
+            <p>No reviews yet. Be the first to share your experience!</p>
+        </div>
+
+        <div class="review-card" *ngFor="let review of reviews">
+            <div class="review-header">
+                <span class="user-name">{{review.userId?.name || 'Anonymous User'}}</span>
+                <span class="review-date">{{review.createdAt | date:'mediumDate'}}</span>
+            </div>
+            <div class="review-stars">
+                <i class="material-icons" *ngFor="let star of [1,2,3,4,5]"
+                    [style.color]="star <= review.rating ? '#ffc107' : '#e4e5e9'">star</i>
+            </div>
+            <p class="review-text">{{review.story}}</p>
+            <div class="review-photos" *ngIf="review.photos && review.photos.length > 0">
+                <img *ngFor="let photo of review.photos" [src]="'http://localhost:5000/' + photo" alt="Review Photo"
+                    class="review-img">
+            </div>
+        </div>
+    </div>
+
+    <div class="add-review-section">
+        <h2>Write a Review</h2>
+        <div class="review-form">
+            <div class="form-group">
+                <label>Rating:</label>
+                <select [(ngModel)]="newReview.rating">
+                    <option [value]="5">5 - Excellent</option>
+                    <option [value]="4">4 - Good</option>
+                    <option [value]="3">3 - Average</option>
+                    <option [value]="2">2 - Poor</option>
+                    <option [value]="1">1 - Terrible</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Your Experience:</label>
+                <textarea rows="4" [(ngModel)]="newReview.story"
+                    placeholder="Share details of your own experience..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Add Photos (Max 5)</label>
+                <input type="file" (change)="onFileSelected($event)" multiple accept="image/*" />
+                <div class="photo-preview" *ngIf="previewUrls.length > 0">
+                    <img *ngFor="let url of previewUrls" [src]="url" alt="Preview">
+                </div>
+            </div>
+
+            <button (click)="submitReview()" [disabled]="isSubmitting" class="submit-btn">
+                {{ isSubmitting ? 'Submitting...' : 'Submit Review' }}
+            </button>
+        </div>
+    </div>
+</div>

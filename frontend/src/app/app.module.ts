@@ -50,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 import { CommunityComponent } from './Component/community-page/community.component';
 import { TicketPageComponent } from './Component/ticket-page/ticket-page.component';
 import { ShareExperienceComponent } from './Component/share-experience/share-experience.component';
+import { RouteDetailsComponent } from './Component/route-details/route-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +74,8 @@ import { ShareExperienceComponent } from './Component/share-experience/share-exp
     MyTripComponent,
     CommunityComponent,
     TicketPageComponent,
-    ShareExperienceComponent
+    ShareExperienceComponent,
+    RouteDetailsComponent
   ],
   imports: [
     BrowserModule,

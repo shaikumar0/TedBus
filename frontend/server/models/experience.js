@@ -17,7 +17,7 @@ const experienceSchema = new mongoose.Schema(
     journeyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Bookings",
-      required: true
+      required: false
     },
 
     routeId: {
