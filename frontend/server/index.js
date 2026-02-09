@@ -15,9 +15,7 @@ mongoose.connect(DBURL)
     .then(() => console.log("Mongodb connected"))
     .catch(err => console.error('Mongodb connection error:', err))
 
-app.get('/', (req, res) => {
-    res.send('Hello , Ted bus is working')
-})
+
 
 const customerroutes = require("./routes/customer");
 const routesroute = require("./routes/route");
