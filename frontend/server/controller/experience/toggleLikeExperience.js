@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Experience = require("../../models/experience.js");
-const ExperienceLike = require("../../models/ExperienceLike.js");
+const ExperienceLike = require("../../models/experienceLike.js");
 
 const toggleLikeExperience = asyncHandler(async (req, res) => {
   const experienceId = req.params.id;
