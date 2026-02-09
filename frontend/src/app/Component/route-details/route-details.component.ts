@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
 import { ActivatedRoute } from '@angular/router';
 import { ExperienceService } from '../../service/experience.service';
 import { BusService } from '../../service/bus.service';

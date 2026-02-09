@@ -26,41 +26,35 @@ const path = require('path');
 
 const fs = require('fs');
 
-const staticPath = path.join(__dirname, '../dist/frontend/browser');
-console.log('__dirname:', __dirname);
-console.log('Static Path resolved to:', staticPath);
+// Resolve static path - check both potential locations (Angular 17+ vs older)
+const potentialPaths = [
+    path.join(__dirname, '../dist/frontend/browser'),
+    path.join(__dirname, '../dist/frontend')
+];
 
-// Check if static path exists
-if (fs.existsSync(staticPath)) {
-    console.log('Static path exists. Contents:', fs.readdirSync(staticPath));
+let staticPath = potentialPaths.find(p => fs.existsSync(p));
+
+if (!staticPath) {
+    console.error('CRITICAL: Static path NOT FOUND. Checked:', potentialPaths);
+    // Fallback to the first one just to have a path, even if it doesn't exist yet
+    staticPath = potentialPaths[0];
 } else {
-    console.error('CRITICAL: Static path DOES NOT EXIST:', staticPath);
+    console.log('Static Path resolved to:', staticPath);
+    console.log('Contents:', fs.readdirSync(staticPath));
 }
 
 // REQUEST LOGGER
 app.use((req, res, next) => {
-    console.log(`[REQUEST] ${req.method} ${req.url}`);
+    console.log(`[REQUEST START] ${req.method} ${req.url}`);
+
+    // Log response status on finish
+    res.on('finish', () => {
+        console.log(`[REQUEST END] ${req.method} ${req.url} -> Status: ${res.statusCode}`);
+    });
     next();
 });
 
-// MANUAL STATIC FILE HANDLER (To debug/fix static serving issues)
-app.use((req, res, next) => {
-    if (req.method !== 'GET') return next();
 
-    // Check if the request is for a static file (by extension)
-    // or if it matches a file in the static directory
-    let requestPath = req.path;
-
-    // Remove query params if any (req.path handles this usually)
-    const filePath = path.join(staticPath, requestPath);
-
-    if (fs.existsSync(filePath) && fs.lstatSync(filePath).isFile()) {
-        console.log(`[MANUAL SERVE] Serving file: ${filePath}`);
-        return res.sendFile(filePath);
-    }
-
-    next();
-});
 
 // Serve static files from the Angular app (Standard)
 app.use(express.static(staticPath));
@@ -73,11 +67,12 @@ app.use(experienceroute)
 // Handle all other routes by serving the index.html from the build folder
 app.get('*', (req, res) => {
     const indexPath = path.join(staticPath, 'index.html');
-    console.log('Serving index.html from:', indexPath);
+    console.log('[CATCH-ALL] Serving index.html from:', indexPath);
     if (!fs.existsSync(indexPath)) {
-        console.error('index.html NOT FOUND at:', indexPath);
+        console.error('[ERROR] index.html NOT FOUND at:', indexPath);
         return res.status(404).send('Application build not found on server.');
     }
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     res.sendFile(indexPath);
 });
 
