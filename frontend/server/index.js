@@ -30,27 +30,39 @@ const staticPath = path.join(__dirname, '../dist/frontend/browser');
 console.log('__dirname:', __dirname);
 console.log('Static Path resolved to:', staticPath);
 
+// Check if static path exists
 if (fs.existsSync(staticPath)) {
     console.log('Static path exists. Contents:', fs.readdirSync(staticPath));
 } else {
-    console.error('Static path DOES NOT EXIST:', staticPath);
-    // Check if dist exists at all
-    const distPath = path.join(__dirname, '../dist');
-    if (fs.existsSync(distPath)) {
-        console.log('dist directory contents:', fs.readdirSync(path.join(__dirname, '../dist')));
-        console.log('dist/frontend contents:', fs.existsSync(path.join(distPath, 'frontend')) ? fs.readdirSync(path.join(distPath, 'frontend')) : 'frontend dir not found');
-    } else {
-        console.error('../dist does not exist');
-    }
+    console.error('CRITICAL: Static path DOES NOT EXIST:', staticPath);
 }
 
-// Log all incoming requests
+// REQUEST LOGGER
 app.use((req, res, next) => {
     console.log(`[REQUEST] ${req.method} ${req.url}`);
     next();
 });
 
-// Serve static files from the Angular app
+// MANUAL STATIC FILE HANDLER (To debug/fix static serving issues)
+app.use((req, res, next) => {
+    if (req.method !== 'GET') return next();
+
+    // Check if the request is for a static file (by extension)
+    // or if it matches a file in the static directory
+    let requestPath = req.path;
+
+    // Remove query params if any (req.path handles this usually)
+    const filePath = path.join(staticPath, requestPath);
+
+    if (fs.existsSync(filePath) && fs.lstatSync(filePath).isFile()) {
+        console.log(`[MANUAL SERVE] Serving file: ${filePath}`);
+        return res.sendFile(filePath);
+    }
+
+    next();
+});
+
+// Serve static files from the Angular app (Standard)
 app.use(express.static(staticPath));
 
 app.use(bookingroute)
