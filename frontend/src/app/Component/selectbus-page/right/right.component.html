@@ -11,3 +11,17 @@
         </div>
     </div>
 </div>
+
+
+<div *ngIf="!isLoading && !isBusFound" class="no-buses-container">
+    <div class="no-buses-content">
+        <img src="https://www.redbus.in/images/no_bus.png" alt="No Buses Found"
+            style="width: 100px; margin-bottom: 20px;">
+        <h3>Oops! No buses found.</h3>
+        <p>No buses found for this route. Please try searching for a different date or route.</p>
+    </div>
+</div>
+
+<div *ngIf="isLoading" class="loading-container">
+    <p>Searching for buses...</p>
+</div>

@@ -1,0 +1,59 @@
+<div class="route-planner-container">
+    <div class="sidebar">
+        <h2>Route Planner</h2>
+
+        <div class="form-group">
+            <label>Start Location</label>
+            <input type="text" [(ngModel)]="startPoint" placeholder="Enter start location"
+                (input)="searchLocation(startPoint, 'start')">
+            <ul *ngIf="startSuggestions.length > 0" class="suggestions-list">
+                <li *ngFor="let result of startSuggestions" (click)="selectLocation(result, 'start')">
+                    {{ result.display_name }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="waypoints-list">
+            <label>Waypoints</label>
+            <div *ngFor="let waypoint of waypoints; let i = index" class="waypoint-item" style="position: relative;">
+                <input type="text" [(ngModel)]="waypoints[i].name" placeholder="Waypoint {{i + 1}}"
+                    (input)="searchLocation(waypoints[i].name, 'waypoint', i)">
+                <button class="remove-btn" (click)="removeWaypoint(i)">&times;</button>
+                <ul *ngIf="waypointSuggestions[i] && waypointSuggestions[i].length > 0" class="suggestions-list">
+                    <li *ngFor="let result of waypointSuggestions[i]" (click)="selectLocation(result, 'waypoint', i)">
+                        {{ result.display_name }}
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-secondary" (click)="addWaypoint()">+ Add Waypoint</button>
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+            <label>Destination</label>
+            <input type="text" [(ngModel)]="endPoint" placeholder="Enter destination"
+                (input)="searchLocation(endPoint, 'end')">
+            <ul *ngIf="endSuggestions.length > 0" class="suggestions-list">
+                <li *ngFor="let result of endSuggestions" (click)="selectLocation(result, 'end')">
+                    {{ result.display_name }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="actions">
+            <!-- Button is less necessary now if we auto-route on select, but good to keep for manual refresh -->
+            <button class="btn" (click)="calculateRoute()">Get Route</button>
+            <button class="btn" style="margin-top: 10px; width: 100%; background-color: #3e3e52;"
+                (click)="searchBuses()">Search Buses</button>
+        </div>
+
+        <div *ngIf="routeSummary" class="route-info">
+            <h3>Route Summary</h3>
+            <p><strong>Distance:</strong> {{ routeSummary.totalDistance | number:'1.1-2' }} km</p>
+            <p><strong>Time:</strong> {{ routeSummary.totalTime | number:'1.0-0' }} min</p>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+</div>

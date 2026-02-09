@@ -304,3 +304,38 @@
 .busBoxSection15:hover {
   transform: scale(1.05);
 }
+
+/* Dark Mode Support */
+:host-context(.dark) .bus-box {
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+:host-context(.dark) .bus-box:hover {
+  box-shadow: 0 16px 30px 1px rgba(255, 255, 255, 0.05);
+}
+
+:host-context(.dark) .busBoxSection11>div:nth-child(1),
+:host-context(.dark) .busBoxSection12>div:nth-child(1),
+:host-context(.dark) .busBoxSection14>div:nth-child(1),
+:host-context(.dark) .busBoxSection16>div:nth-child(1)>div:nth-child(2) {
+  color: #ffffff;
+}
+
+:host-context(.dark) .busBoxSection11>div:nth-child(2),
+:host-context(.dark) .busBoxSection12>div:nth-child(2),
+:host-context(.dark) .busBoxSection14>div:nth-child(2),
+:host-context(.dark) .busBoxSection16>div:nth-child(1),
+:host-context(.dark) .busBoxSection16>div:nth-child(2) {
+  color: #a0a0a0;
+}
+
+:host-context(.dark) .busBoxSection17>div:nth-child(2)>div:nth-child(1),
+:host-context(.dark) .busBoxSection17>div:nth-child(3)>div:nth-child(1) {
+  color: #ddd;
+}
+
+:host-context(.dark) .busBoxSection22>div {
+  background-color: #2d2d2d;
+  color: #ccc;
+}

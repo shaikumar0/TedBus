@@ -8,6 +8,7 @@ import { ShareExperienceComponent } from './Component/share-experience/share-exp
 import { ProfilePageComponent } from './Component/profile-page/profile-page.component';
 import { CommunityComponent } from './Component/community-page/community.component'
 import { RouteDetailsComponent } from './Component/route-details/route-details.component';
+import { RoutePlannerComponent } from './Component/route-planner/route-planner.component';
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'select-bus', component: SelectbusPageComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'ticket', component: TicketPageComponent },
   { path: 'share-experience', component: ShareExperienceComponent },
   { path: 'route-details/:routeId', component: RouteDetailsComponent },
+  { path: 'route-planner', component: RoutePlannerComponent },
 ];
 
 

@@ -1,23 +1,46 @@
-.HeaderOne{
+.HeaderOne {
     background-color: #f8f4f4;
-    padding:10px 10px;
+    padding: 10px 10px;
     margin-bottom: 10px;
+    transition: background-color 0.3s, color 0.3s;
 }
-.HeaderOne > p:nth-child(1){
+
+.HeaderOne>p:nth-child(1) {
     margin: 10px 0px;
 }
-.HeaderTwo{
-    padding:10px 10px
+
+.HeaderTwo {
+    padding: 10px 10px;
+    color: inherit;
 }
-.HeaderTwo > *{
+
+.HeaderTwo>* {
     display: inline-block;
     margin-right: 10px;
 }
-.HeaderTwo > button{
+
+.HeaderTwo>button {
     padding: 5px;
     width: 100px;
     background-color: #f8f4f4;
     border: 1px solid black;
     border-radius: 2px;
-    outline:none
+    outline: none;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Dark Mode Overrides */
+:host-context(.dark) .HeaderOne {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+:host-context(.dark) .HeaderTwo>button {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+}
+
+:host-context(.dark) .HeaderTwo {
+    color: #fff;
 }

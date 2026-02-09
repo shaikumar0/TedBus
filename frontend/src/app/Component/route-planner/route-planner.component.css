@@ -1,0 +1,162 @@
+.route-planner-container {
+    display: flex;
+    height: 90vh;
+    /* Adjust as needed */
+    position: relative;
+}
+
+.sidebar {
+    width: 350px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow-y: auto;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.map-container {
+    flex-grow: 1;
+    height: 100%;
+    z-index: 1;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.waypoint-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.waypoint-item input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.btn {
+    padding: 8px 15px;
+    background-color: #d84e55;
+    /* RedBus Red */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #c03940;
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #d84e55;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #fff;
+    position: absolute;
+    width: calc(100% - 40px);
+    /* Adjust based on sidebar padding */
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.route-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+/* Dark Mode Overrides */
+:host-context(.dark) .sidebar {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+:host-context(.dark) .form-group input {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    border-color: #444;
+}
+
+:host-context(.dark) .suggestions-list {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+:host-context(.dark) .suggestions-list li {
+    border-bottom-color: #444;
+    color: #fff;
+}
+
+:host-context(.dark) .suggestions-list li:hover {
+    background-color: #3d3d3d;
+}
+
+:host-context(.dark) .btn-secondary {
+    background-color: #333;
+    color: #fff;
+}
+
+:host-context(.dark) .btn-secondary:hover {
+    background-color: #444;
+}
+
+:host-context(.dark) .route-info {
+    background-color: #2d2d2d;
+    color: #fff;
+}

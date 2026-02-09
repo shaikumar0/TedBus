@@ -51,6 +51,7 @@ import { CommunityComponent } from './Component/community-page/community.compone
 import { TicketPageComponent } from './Component/ticket-page/ticket-page.component';
 import { ShareExperienceComponent } from './Component/share-experience/share-experience.component';
 import { RouteDetailsComponent } from './Component/route-details/route-details.component';
+import { RoutePlannerComponent } from './Component/route-planner/route-planner.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +76,8 @@ import { RouteDetailsComponent } from './Component/route-details/route-details.c
     CommunityComponent,
     TicketPageComponent,
     ShareExperienceComponent,
-    RouteDetailsComponent
+    RouteDetailsComponent,
+    RoutePlannerComponent
   ],
   imports: [
     BrowserModule,

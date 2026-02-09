@@ -1,0 +1,45 @@
+.no-buses-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+.no-buses-content {
+    text-align: center;
+    color: #555;
+}
+
+.no-buses-content h3 {
+    margin-bottom: 10px;
+    color: #3e3e52;
+}
+
+.loading-container {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Dark Mode Overrides */
+:host-context(.dark) .no-buses-container {
+    background: #1e1e1e;
+    border-color: #444;
+}
+
+:host-context(.dark) .no-buses-content {
+    color: #ccc;
+}
+
+:host-context(.dark) .no-buses-content h3 {
+    color: #fff;
+}
+
+:host-context(.dark) .loading-container {
+    color: #aaa;
+}

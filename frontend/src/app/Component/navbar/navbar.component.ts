@@ -29,7 +29,8 @@ export class NavbarComponent implements OnInit {
     if (sessionStorage.getItem("Loggedinuser")) {
       this.isloggedIn = true
     } else {
-      this.isloggedIn = false
+      this.isloggedIn = false;
+      this.themeService.setLightMode();
     }
 
 
