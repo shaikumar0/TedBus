@@ -24,10 +24,20 @@ const routesroute = require("./routes/route");
 const bookingroute = require("./routes/booking");
 const experienceroute = require("./routes/experience");
 
+const path = require('path');
+
 app.use(bookingroute)
 app.use(routesroute)
 app.use(customerroutes)
 app.use(experienceroute)
+
+// Serve static files from the Angular app
+app.use(express.static(path.join(__dirname, '../dist/frontend/browser')));
+
+// Handle all other routes by serving the index.html from the build folder
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/frontend/browser/index.html'));
+});
 
 const PORT = 5000
 app.listen(PORT, () => {
