@@ -24,8 +24,28 @@ const experienceroute = require("./routes/experience");
 
 const path = require('path');
 
+const fs = require('fs');
+
+const staticPath = path.join(__dirname, '../dist/frontend/browser');
+console.log('__dirname:', __dirname);
+console.log('Static Path resolved to:', staticPath);
+
+if (fs.existsSync(staticPath)) {
+    console.log('Static path exists. Contents:', fs.readdirSync(staticPath));
+} else {
+    console.error('Static path DOES NOT EXIST:', staticPath);
+    // Check if dist exists at all
+    const distPath = path.join(__dirname, '../dist');
+    if (fs.existsSync(distPath)) {
+        console.log('dist directory contents:', fs.readdirSync(path.join(__dirname, '../dist')));
+        console.log('dist/frontend contents:', fs.existsSync(path.join(distPath, 'frontend')) ? fs.readdirSync(path.join(distPath, 'frontend')) : 'frontend dir not found');
+    } else {
+        console.error('../dist does not exist');
+    }
+}
+
 // Serve static files from the Angular app
-app.use(express.static(path.join(__dirname, '../dist/frontend/browser')));
+app.use(express.static(staticPath));
 
 app.use(bookingroute)
 app.use(routesroute)
@@ -34,10 +54,16 @@ app.use(experienceroute)
 
 // Handle all other routes by serving the index.html from the build folder
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/frontend/browser/index.html'));
+    const indexPath = path.join(staticPath, 'index.html');
+    console.log('Serving index.html from:', indexPath);
+    if (!fs.existsSync(indexPath)) {
+        console.error('index.html NOT FOUND at:', indexPath);
+        return res.status(404).send('Application build not found on server.');
+    }
+    res.sendFile(indexPath);
 });
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`)
 })
