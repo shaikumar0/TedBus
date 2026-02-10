@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet-routing-machine';
 import { ActivatedRoute } from '@angular/router';
 import { ExperienceService } from '../../service/experience.service';
 import { BusService } from '../../service/bus.service';
@@ -79,92 +80,76 @@ export class RouteDetailsComponent implements OnInit {
     }
 
     initMap(): void {
-        // Dynamic import to avoid SSR issues if any, though standard angular is CSR
-        // Also handling the case where L might not be available immediately
-        Promise.all([
-            import('leaflet'),
-            import('leaflet-routing-machine')
-        ]).then(([L, RoutingMachine]) => {
-            // Check if map already exists
-            if (this.map) {
-                this.map.remove();
-            }
-
-            // Fix for Leaflet default icon issues in Webpack/Angular
-            const iconRetinaUrl = 'assets/marker-icon-2x.png';
-            const iconUrl = 'assets/marker-icon.png';
-            const shadowUrl = 'assets/marker-shadow.png';
-            const iconDefault = L.icon({
-                iconRetinaUrl,
-                iconUrl,
-                shadowUrl,
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                tooltipAnchor: [16, -28],
-                shadowSize: [41, 41]
-            });
-            L.Marker.prototype.options.icon = iconDefault;
-
-            // Using Bangalore as a default center if path is empty, though in init() we check for path length
-            const defaultCenter = this.routeInfo.path.length > 0
-                ? [this.routeInfo.path[0].lat, this.routeInfo.path[0].lng]
-                : [12.9716, 77.5946];
-
-            this.map = L.map('map').setView(defaultCenter as [number, number], 7);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(this.map);
-
-            if (this.routeInfo.path && this.routeInfo.path.length >= 2) {
-                // Use the start and end points from the path for routing
-                const waypoints = [
-                    L.latLng(this.routeInfo.path[0].lat, this.routeInfo.path[0].lng),
-                    // Add intermediate waypoints if any (excluding start and end)
-                    ...this.routeInfo.path.slice(1, -1).map((p: any) => L.latLng(p.lat, p.lng)),
-                    L.latLng(this.routeInfo.path[this.routeInfo.path.length - 1].lat, this.routeInfo.path[this.routeInfo.path.length - 1].lng)
-                ];
-
-                // Fallback Polyline (Red Dashed) - Shows direct path immediately
-                // This ensures *something* is visible even if the routing machine fails/loads slowly
-                const latLngs = this.routeInfo.path.map((p: any) => [p.lat, p.lng]);
-                const fallbackPolyline = L.polyline(latLngs, {
-                    color: 'red',
-                    weight: 2,
-                    dashArray: '5, 10',
-                    opacity: 0.5
-                }).addTo(this.map);
-                this.map.fitBounds(fallbackPolyline.getBounds(), { padding: [50, 50] });
-
-                const routingControl = L.Routing.control({
-                    waypoints: waypoints,
-                    routeWhileDragging: false,
-                    show: false, // Hide the itinerary instructions
-                    addWaypoints: false, // Disable adding new waypoints by dragging
-                    fitSelectedRoutes: true,
-                    lineOptions: {
-                        styles: [{ color: 'blue', opacity: 0.8, weight: 6 }],
-                        extendToWaypoints: true,
-                        missingRouteTolerance: 100
-                    }
-                })
-                    .on('routesfound', (e: any) => {
-                        console.log('Routes found!', e);
-                        // If route found, maybe remove fallback or just let it sit underneath?
-                        // Let's keep it as a "direct path" reference or remove it if desired:
-                        // this.map.removeLayer(fallbackPolyline);
-                    })
-                    .on('routingerror', (e: any) => {
-                        console.error('Routing error:', e);
-                        // Fallback is already there, so user sees something.
-                    })
-                    .addTo(this.map);
-
-            }
-        }).catch(err => {
-            console.error('Error loading Leaflet or Routing Machine', err);
+        // Fix for Leaflet default icon issues in Webpack/Angular
+        const iconRetinaUrl = 'assets/marker-icon-2x.png';
+        const iconUrl = 'assets/marker-icon.png';
+        const shadowUrl = 'assets/marker-shadow.png';
+        const iconDefault = L.icon({
+            iconRetinaUrl,
+            iconUrl,
+            shadowUrl,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41]
         });
+        L.Marker.prototype.options.icon = iconDefault;
+
+        // Check if map already exists
+        if (this.map) {
+            this.map.remove();
+        }
+
+        // Using Bangalore as a default center if path is empty, though in init() we check for path length
+        const defaultCenter: L.LatLngExpression = this.routeInfo.path.length > 0
+            ? [this.routeInfo.path[0].lat, this.routeInfo.path[0].lng]
+            : [12.9716, 77.5946];
+
+        this.map = L.map('map').setView(defaultCenter, 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(this.map);
+
+        if (this.routeInfo.path && this.routeInfo.path.length >= 2) {
+            // Use the start and end points from the path for routing
+            const waypoints = [
+                L.latLng(this.routeInfo.path[0].lat, this.routeInfo.path[0].lng),
+                // Add intermediate waypoints if any (excluding start and end)
+                ...this.routeInfo.path.slice(1, -1).map((p: any) => L.latLng(p.lat, p.lng)),
+                L.latLng(this.routeInfo.path[this.routeInfo.path.length - 1].lat, this.routeInfo.path[this.routeInfo.path.length - 1].lng)
+            ];
+
+            // Fallback Polyline (Red Dashed) - Shows direct path immediately
+            const latLngs = this.routeInfo.path.map((p: any) => [p.lat, p.lng]);
+            const fallbackPolyline = L.polyline(latLngs, {
+                color: 'red',
+                weight: 2,
+                dashArray: '5, 10',
+                opacity: 0.5
+            }).addTo(this.map);
+            this.map.fitBounds(fallbackPolyline.getBounds(), { padding: [50, 50] });
+
+            (L.Routing as any).control({
+                waypoints: waypoints,
+                routeWhileDragging: false,
+                show: false, // Hide the itinerary instructions
+                addWaypoints: false, // Disable adding new waypoints by dragging
+                fitSelectedRoutes: true,
+                lineOptions: {
+                    styles: [{ color: 'blue', opacity: 0.8, weight: 6 }],
+                    extendToWaypoints: true,
+                    missingRouteTolerance: 100
+                }
+            })
+                .on('routesfound', (e: any) => {
+                })
+                .on('routingerror', (e: any) => {
+                    console.error('Routing error:', e);
+                })
+                .addTo(this.map);
+        }
     }
 
 
@@ -225,11 +210,9 @@ export class RouteDetailsComponent implements OnInit {
             formData.append('photos', file);
         }
 
-        console.log("Submitting review via FormData");
 
         this.experienceService.createExperience(formData).subscribe({
             next: (res) => {
-                console.log("Review submitted:", res);
                 this.isSubmitting = false;
                 this.newReview.story = ''; // Clear form
                 this.selectedFiles = [];

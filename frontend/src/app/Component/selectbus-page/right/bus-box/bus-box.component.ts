@@ -44,10 +44,8 @@ export class BusBoxComponent implements OnInit {
 
     // Then fetch real reviews from DB
     if (this.routedetails && this.routedetails._id) {
-      console.log("Fetching reviews for route:", this.routedetails._id);
       this.experienceService.getRouteReviews(this.routedetails._id).subscribe({
         next: (res) => {
-          console.log("Reviews response:", res);
           if (res.success && res.data.totalReviews > 0) {
             // If we have real DB reviews, we use them instead of hardcoded ones
             this.avgrating = res.data.averageRating;
@@ -79,7 +77,6 @@ export class BusBoxComponent implements OnInit {
 
   toggleReviews() {
     this.showReviews = !this.showReviews;
-    console.log("Toggle reviews:", this.showReviews);
   }
 }
 

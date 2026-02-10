@@ -14,7 +14,6 @@ export class LandingPageComponent {
   constructor(private router: Router, public dialog: MatDialog) { }
   fromEvent(option: string) {
     this.fromoption = option;
-    console.log(this.fromoption)
   }
   toEvent(option: string) {
     this.tooption = option;
@@ -29,27 +28,26 @@ export class LandingPageComponent {
     } else {
       this.date = 'null';
     }
-    console.log(this.date)
-  }
-  submit() {
-    if (this.fromoption && this.tooption && this.date) {
-      if (this.fromoption === 'Delhi' && this.tooption === 'Jaipur' || this.fromoption === 'Mumbai' && this.tooption === 'Goa' || this.fromoption === 'Bangalore' && this.tooption === 'Mysore' || this.fromoption === 'Kolkata' && this.tooption === 'Darjeeling' || this.fromoption === 'Chennai' && this.tooption === 'Pondicherry') {
-        this.router.navigate(['/select-bus'],{
-          queryParams:{
-            departure:this.fromoption,
-            arrival:this.tooption,
-            date:this.date
-          }
-        });
-      } else {
-        const dialogRef = this.dialog.open(DialogComponent);
-
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
-      }
-    } else {
-      alert("fill up the details!!!")
-    }
   }
 }
+submit() {
+  if (this.fromoption && this.tooption && this.date) {
+    if (this.fromoption === 'Delhi' && this.tooption === 'Jaipur' || this.fromoption === 'Mumbai' && this.tooption === 'Goa' || this.fromoption === 'Bangalore' && this.tooption === 'Mysore' || this.fromoption === 'Kolkata' && this.tooption === 'Darjeeling' || this.fromoption === 'Chennai' && this.tooption === 'Pondicherry') {
+      this.router.navigate(['/select-bus'], {
+        queryParams: {
+          departure: this.fromoption,
+          arrival: this.tooption,
+          date: this.date
+        }
+      });
+    } else {
+      const dialogRef = this.dialog.open(DialogComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
+  } else {
+    alert("fill up the details!!!")
+  }
+}
+  }
