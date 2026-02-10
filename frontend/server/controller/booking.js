@@ -23,7 +23,7 @@ exports.addbooking = async (req, res) => {
         // If you want bus name in email immediately, you'd need to fetch Bus model here.
         // Let's keep it simple or fetch if needed.
         // Currently emailSender handles missing busName gracefully.
-        emailSender.sendConfirmation(booking.email, booking);
+        await emailSender.sendConfirmation(booking.email, booking);
 
         res.send(booking);
     } catch (error) {
@@ -47,7 +47,7 @@ exports.cancelBooking = async (req, res) => {
 
         booking.status = 'CANCELLED';
         await booking.save();
-        emailSender.sendCancellation(booking.email, booking);
+        await emailSender.sendCancellation(booking.email, booking);
 
         res.send(booking);
     } catch (error) {
