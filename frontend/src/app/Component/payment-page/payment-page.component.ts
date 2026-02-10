@@ -63,11 +63,9 @@ export class PaymentPageComponent implements OnInit {
 
     this.dataservice.currentdata.subscribe(data => {
       this.routedetails = data;
-      console.log(data)
     })
     this.dataservice.passdata.subscribe(data => {
       this.passengerdetails = data;
-      console.log(data)
     })
   }
   getloggedinuser(): any {
@@ -110,7 +108,6 @@ export class PaymentPageComponent implements OnInit {
     // console.log(myBooking)
     this.busservice.addbusmongo(myBooking).subscribe({
       next: (response) => {
-        console.log('Bus post request success', response);
         // Redirect to Ticket Page with booking details
         this.router.navigate(['/ticket'], { state: { booking: response } });
       },

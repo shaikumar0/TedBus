@@ -34,7 +34,6 @@ const sendConfirmation = async (email, bookingDetails) => {
 
     try {
         await transporter.sendMail(mailOptions);
-        console.log(`Confirmation email sent to ${email}`);
     } catch (error) {
         console.error('Error sending confirmation email:', error);
     }
@@ -61,7 +60,6 @@ const sendCancellation = async (email, bookingDetails) => {
 
     try {
         await transporter.sendMail(mailOptions);
-        console.log(`Cancellation email sent to ${email}`);
     } catch (error) {
         console.error('Error sending cancellation email:', error);
     }

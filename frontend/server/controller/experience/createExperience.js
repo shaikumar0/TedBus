@@ -5,8 +5,6 @@ const Booking = require("../../models/booking.js");
 const Bus = require("../../models/bus.js");
 
 const createExperience = asyncHandler(async (req, res) => {
-  console.log("Creating Experience with body:", req.body);
-  console.log("Files:", req.files);
 
   const {
     userId,
@@ -40,9 +38,6 @@ const createExperience = asyncHandler(async (req, res) => {
       console.error("Error fetching bus/route details:", error);
     }
   } else if (routeId) {
-    // If no journeyId but routeId is provided, we can try to fetch generic bus info or leave as default
-    // For now, we just ensure routeId is used.
-    console.log("Using provided routeId:", routeId);
   }
 
   const photos = req.files ? req.files.map(file => file.path.replace(/\\/g, "/")) : [];
@@ -59,7 +54,6 @@ const createExperience = asyncHandler(async (req, res) => {
     busName
   });
 
-  console.log("Experience created:", experience);
   res.status(201).json({
     success: true,
     message: "Experience created successfully",

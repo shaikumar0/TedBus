@@ -29,25 +29,24 @@ export class LandingPageComponent {
       this.date = 'null';
     }
   }
-}
-submit() {
-  if (this.fromoption && this.tooption && this.date) {
-    if (this.fromoption === 'Delhi' && this.tooption === 'Jaipur' || this.fromoption === 'Mumbai' && this.tooption === 'Goa' || this.fromoption === 'Bangalore' && this.tooption === 'Mysore' || this.fromoption === 'Kolkata' && this.tooption === 'Darjeeling' || this.fromoption === 'Chennai' && this.tooption === 'Pondicherry') {
-      this.router.navigate(['/select-bus'], {
-        queryParams: {
-          departure: this.fromoption,
-          arrival: this.tooption,
-          date: this.date
-        }
-      });
-    } else {
-      const dialogRef = this.dialog.open(DialogComponent);
+  submit() {
+    if (this.fromoption && this.tooption && this.date) {
+      if (this.fromoption === 'Delhi' && this.tooption === 'Jaipur' || this.fromoption === 'Mumbai' && this.tooption === 'Goa' || this.fromoption === 'Bangalore' && this.tooption === 'Mysore' || this.fromoption === 'Kolkata' && this.tooption === 'Darjeeling' || this.fromoption === 'Chennai' && this.tooption === 'Pondicherry') {
+        this.router.navigate(['/select-bus'], {
+          queryParams: {
+            departure: this.fromoption,
+            arrival: this.tooption,
+            date: this.date
+          }
+        });
+      } else {
+        const dialogRef = this.dialog.open(DialogComponent);
 
-      dialogRef.afterClosed().subscribe(result => {
-      });
+        dialogRef.afterClosed().subscribe(result => {
+        });
+      }
+    } else {
+      alert("fill up the details!!!")
     }
-  } else {
-    alert("fill up the details!!!")
   }
 }
-  }

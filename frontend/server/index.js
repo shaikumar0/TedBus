@@ -34,22 +34,16 @@ const potentialPaths = [
 
 let staticPath = potentialPaths.find(p => fs.existsSync(p));
 
-if (!staticPath) {
-    console.error('CRITICAL: Static path NOT FOUND. Checked:', potentialPaths);
-    // Fallback to the first one just to have a path, even if it doesn't exist yet
-    staticPath = potentialPaths[0];
-} else {
+if (staticPath) {
     console.log('Static Path resolved to:', staticPath);
-    console.log('Contents:', fs.readdirSync(staticPath));
 }
 
-// REQUEST LOGGER
+// REQUEST LOGGER - Minimal for production
 app.use((req, res, next) => {
-    console.log(`[REQUEST START] ${req.method} ${req.url}`);
-
-    // Log response status on finish
     res.on('finish', () => {
-        console.log(`[REQUEST END] ${req.method} ${req.url} -> Status: ${res.statusCode}`);
+        if (res.statusCode >= 400) {
+            console.log(`${req.method} ${req.url} -> Status: ${res.statusCode}`);
+        }
     });
     next();
 });
@@ -67,9 +61,7 @@ app.use(experienceroute)
 // Handle all other routes by serving the index.html from the build folder
 app.get('*', (req, res) => {
     const indexPath = path.join(staticPath, 'index.html');
-    console.log('[CATCH-ALL] Serving index.html from:', indexPath);
     if (!fs.existsSync(indexPath)) {
-        console.error('[ERROR] index.html NOT FOUND at:', indexPath);
         return res.status(404).send('Application build not found on server.');
     }
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');

@@ -17,7 +17,6 @@ exports.addbooking = async (req, res) => {
         }
 
         const booking = await Booking.create(bookingData);
-        console.log("Booking created:", booking);
 
         // Fetch bus name if possible for better email context, or just pass generic
         // For now, we'll pass basic details.
@@ -48,8 +47,6 @@ exports.cancelBooking = async (req, res) => {
 
         booking.status = 'CANCELLED';
         await booking.save();
-
-        console.log("Booking cancelled:", booking);
         emailSender.sendCancellation(booking.email, booking);
 
         res.send(booking);
