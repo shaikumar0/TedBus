@@ -1,4 +1,10 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns');
+
+// Force IPv4 for DNS lookups to avoid ENETUNREACH on IPv6-only environments (like some cloud providers)
+if (dns.setDefaultResultOrder) {
+    dns.setDefaultResultOrder('ipv4first');
+}
 
 // Configure the transporter
 // POST-REVIEW: User must update .env with actual credentials
