@@ -58,7 +58,7 @@ export class MyTripComponent implements OnInit, OnChanges {
 
   cancelBooking(bookingId: string) {
     if (confirm('Are you sure you want to cancel this booking?')) {
-      this.http.post(`http://localhost:5000/cancel/${bookingId}`, {}).subscribe({
+      this.http.post(`/cancel/${bookingId}`, {}).subscribe({
         next: (updatedBooking: any) => {
           alert('Booking cancelled successfully.');
           // Update local state to reflect cancellation immediately

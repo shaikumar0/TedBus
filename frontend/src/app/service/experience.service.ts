@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Experience } from '../model/experience.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExperienceService {
 
-  private baseUrl = 'http://localhost:5000/experience';
+  private baseUrl = environment.apiUrl + '/experience';
 
   constructor(private http: HttpClient) { }
 

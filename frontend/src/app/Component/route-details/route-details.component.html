@@ -41,8 +41,7 @@
             </div>
             <p class="review-text">{{review.story}}</p>
             <div class="review-photos" *ngIf="review.photos && review.photos.length > 0">
-                <img *ngFor="let photo of review.photos" [src]="'http://localhost:5000/' + photo" alt="Review Photo"
-                    class="review-img">
+                <img *ngFor="let photo of review.photos" [src]="'/' + photo" alt="Review Photo" class="review-img">
             </div>
         </div>
     </div>

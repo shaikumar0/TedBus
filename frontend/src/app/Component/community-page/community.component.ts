@@ -13,7 +13,7 @@ export class CommunityComponent implements OnInit {
 
   constructor(private experienceService: ExperienceService) { }
 
-  baseUrl = 'http://localhost:5000/';
+  baseUrl = '/';
 
   ngOnInit(): void {
     this.fetchPosts();
