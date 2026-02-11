@@ -4,6 +4,7 @@
     "start": "cd frontend/server && node index.js"
   },
   "dependencies": {
-    "mongoose": "^9.1.5"
+    "mongoose": "^9.1.5",
+    "resend": "^6.9.2"
   }
 }
