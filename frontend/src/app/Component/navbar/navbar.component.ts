@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 declare var google: any;
 import { CustomerService } from '../../service/customer.service';
 import { Customer } from '../../model/customer.model';
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-  constructor(private router: Router, private customerservice: CustomerService, public themeService: ThemeService, public translate: TranslateService) {
+  constructor(private router: Router, private customerservice: CustomerService, public themeService: ThemeService, public translate: TranslateService, private ngZone: NgZone) {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
   }
@@ -30,20 +30,39 @@ export class NavbarComponent implements OnInit {
       this.isloggedIn = !!user;
       if (!this.isloggedIn) {
         this.themeService.setLightMode();
+        setTimeout(() => {
+          this.rendergooglebutton();
+        }, 100);
       }
     });
 
 
+
+    this.checkGoogleScript();
+  }
+
+  private checkGoogleScript() {
+    if (typeof google !== 'undefined' && google.accounts) {
+      this.initializeGoogleSignIn();
+    } else {
+      setTimeout(() => this.checkGoogleScript(), 100);
+    }
+  }
+
+  private initializeGoogleSignIn() {
     google.accounts.id.initialize({
       client_id: environment.googleClientId,
       callback: (response: any) => {
-        this.handlelogin(response);
-
+        this.ngZone.run(() => {
+          this.handlelogin(response);
+        });
       }
-    })
-  }
-  ngAfterViewInit(): void {
+    });
     this.rendergooglebutton();
+  }
+
+  ngAfterViewInit(): void {
+    // Render button is now handled in initializeGoogleSignIn
   }
   private rendergooglebutton(): void {
     const googlebtn = document.getElementById('google-btn');
