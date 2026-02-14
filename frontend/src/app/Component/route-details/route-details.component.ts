@@ -5,6 +5,7 @@ import 'leaflet-routing-machine';
 import { ActivatedRoute } from '@angular/router';
 import { ExperienceService } from '../../service/experience.service';
 import { BusService } from '../../service/bus.service';
+import { CustomerService } from '../../service/customer.service';
 
 @Component({
     selector: 'app-route-details',
@@ -37,15 +38,21 @@ export class RouteDetailsComponent implements OnInit {
     isSubmitting: boolean = false;
     selectedFiles: File[] = [];
     previewUrls: string[] = [];
+    currentUser: any = null;
 
     private map: any;
 
     constructor(
         private route: ActivatedRoute,
-        private experienceService: ExperienceService
+        private experienceService: ExperienceService,
+        private customerservice: CustomerService
     ) { }
 
     ngOnInit(): void {
+        this.customerservice.user$.subscribe(user => {
+            this.currentUser = user;
+        });
+
         this.route.params.subscribe(params => {
             this.routeId = params['routeId'];
             if (this.routeId) {
@@ -189,12 +196,11 @@ export class RouteDetailsComponent implements OnInit {
         }
 
         // We need a logged in user
-        const user = sessionStorage.getItem("Loggedinuser");
-        if (!user) {
+        if (!this.currentUser) {
             alert('Please login to submit a review.');
             return;
         }
-        const userId = JSON.parse(user)._id;
+        const userId = this.currentUser._id;
 
         this.isSubmitting = true;
 

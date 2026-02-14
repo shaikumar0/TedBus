@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataserviceService } from '../../service/dataservice.service';
 import { HttpClient } from '@angular/common/http';
 import { BusService } from '../../service/bus.service';
+import { CustomerService } from '../../service/customer.service';
 @Component({
   selector: 'app-payment-page',
   templateUrl: './payment-page.component.html',
@@ -28,7 +29,7 @@ export class PaymentPageComponent implements OnInit {
   isinsurance: boolean = false
   iscoviddonated: Boolean = false
   bookingdate: string = new Date().toISOString().split('T')[0]
-  constructor(private route: ActivatedRoute, private router: Router, private dataservice: DataserviceService, private http: HttpClient, private busservice: BusService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private dataservice: DataserviceService, private http: HttpClient, private busservice: BusService, private customerservice: CustomerService) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const passSeatsArray = params['selectedseat'];
@@ -57,7 +58,10 @@ export class PaymentPageComponent implements OnInit {
       this.busarrivaltime = busArrivalTime
       this.busdepauturetime = busDepartureTime
       this.iscoviddonated = iscoviddonated
-      this.getloggedinuser()
+
+      this.customerservice.user$.subscribe(user => {
+        this.customerid = user;
+      });
     })
 
 
@@ -69,11 +73,7 @@ export class PaymentPageComponent implements OnInit {
     })
   }
   getloggedinuser(): any {
-    const loggedinuserjson = sessionStorage.getItem("Loggedinuser");
-    if (loggedinuserjson) {
-      this.customerid = JSON.parse(loggedinuserjson)
-    }
-    else {
+    if (!this.customerid) {
       alert("please login to continue")
     }
     return null;

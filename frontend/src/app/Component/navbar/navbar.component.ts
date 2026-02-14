@@ -26,12 +26,12 @@ export class NavbarComponent implements OnInit {
 
   isloggedIn: boolean = false
   ngOnInit(): void {
-    if (sessionStorage.getItem("Loggedinuser")) {
-      this.isloggedIn = true
-    } else {
-      this.isloggedIn = false;
-      this.themeService.setLightMode();
-    }
+    this.customerservice.user$.subscribe(user => {
+      this.isloggedIn = !!user;
+      if (!this.isloggedIn) {
+        this.themeService.setLightMode();
+      }
+    });
 
 
     google.accounts.id.initialize({
@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit {
     this.customerservice.addcustomermongo(payload).subscribe({
       next: (response) => {
         console.log('POST success', response);
-        sessionStorage.setItem("Loggedinuser", JSON.stringify(response))
+        this.customerservice.setLoggedInUser(response);
         this.themeService.setLightMode();
       },
       error: (error) => {
@@ -76,9 +76,8 @@ export class NavbarComponent implements OnInit {
   }
   handlelogout() {
     google.accounts.id.disableAutoSelect();
-    sessionStorage.removeItem('Loggedinuser');
+    this.customerservice.clearLoggedInUser();
     this.themeService.setLightMode();
-    window.location.reload()
   }
   navigate(route: string) {
     this.router.navigate([route])
